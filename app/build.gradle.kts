@@ -25,6 +25,10 @@ android {
                 "proguard-rules.pro"
             )
         }
+        buildFeatures {
+            viewBinding = true
+        }
+
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -45,4 +49,6 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation("com.jakewharton.timber:timber:4.7.1")
+    implementation("com.github.ajalt:timberkt:1.5.1")
 }
