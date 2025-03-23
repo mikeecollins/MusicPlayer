@@ -40,11 +40,10 @@ class MusicActivity : AppCompatActivity() {
             song.songname = binding.songname.text.toString()
             song.duration = binding.duration.text.toString().toIntOrNull() ?: 800
             song.genre = binding.genre.text.toString()
-            song.isFavourite =
-                binding.isFavourite.text.toString() == "false" //I used chatgtp to convert this into boolean
+            song.isFavourite = binding.isFavourite.text.toString() == "false" //I used chatgtp to convert this into boolean
             song.releasedate = binding.releasedate.text.toString()
             song.songid = binding.songid.text.toString().toIntOrNull() ?: 0
-            song.maxrating = binding.songid.text.toString().toIntOrNull() ?: 10
+            song.maxrating = binding.maxRating.text.toString().toIntOrNull() ?: 10
             if (song.songname.isNotEmpty()) {
                 app.songs.add(song.copy())
                 i("add Button Pressed: ${song}")
