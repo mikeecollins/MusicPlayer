@@ -38,16 +38,91 @@
                 android:orientation="vertical">
 
                 <EditText
-                    android:id="@+id/app_title"
+                    android:id="@+id/songname"
                     android:layout_width="397dp"
                     android:layout_height="48dp"
                     android:layout_margin="8dp"
                     android:autofillHints="hint"
-                    android:hint="@string/app_title"
+                    android:hint="@string/songname"
                     android:inputType="text"
                     android:maxLength="25"
                     android:maxLines="1"
                     android:padding="8dp" />
+
+                <EditText
+                    android:id="@+id/duration"
+                    android:layout_width="397dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="8dp"
+                    android:autofillHints="hint"
+                    android:hint="@integer/duration"
+                    android:inputType="numberDecimal"
+                    android:maxLength="25"
+                    android:maxLines="1"
+                    android:padding="8dp" />
+
+                <EditText
+                    android:id="@+id/isFavourite"
+                    android:layout_width="397dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="8dp"
+                    android:autofillHints="hint"
+                    android:hint="Do you like this song"
+                    android:inputType="text"
+                    android:maxLength="25"
+                    android:maxLines="1"
+                    android:padding="8dp" />
+
+                <EditText
+                    android:id="@+id/genre"
+                    android:layout_width="397dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="8dp"
+                    android:autofillHints="hint"
+                    android:hint="@string/genre"
+                    android:inputType="text"
+                    android:maxLength="25"
+                    android:maxLines="1"
+                    android:padding="8dp" />
+
+                <EditText
+                    android:id="@+id/releasedate"
+                    android:layout_width="397dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="8dp"
+                    android:autofillHints="hint"
+                    android:hint="@string/releasedate"
+                    android:inputType="text"
+                    android:maxLength="25"
+                    android:maxLines="1"
+                    android:padding="8dp" />
+
+                <EditText
+                    android:id="@+id/max_rating"
+                    android:layout_width="397dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="8dp"
+                    android:autofillHints="hint"
+                    android:hint="@integer/max_rating"
+                    android:inputType="numberDecimal"
+                    android:maxLength="25"
+                    android:maxLines="1"
+                    android:padding="8dp" />
+
+                <EditText
+                    android:id="@+id/songid"
+                    android:layout_width="397dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="8dp"
+                    android:autofillHints="hint"
+                    android:hint="@integer/songid"
+                    android:inputType="number"
+                    android:maxLength="25"
+                    android:maxLines="1"
+                    android:padding="8dp" />
+
+
+
 
                 <Button
                     android:id="@+id/btnAdd"

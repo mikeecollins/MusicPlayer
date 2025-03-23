@@ -49,6 +49,55 @@
                     android:maxLines="1"
                     android:padding="8dp" />
 
+                <EditText
+                    android:id="@+id/artistname"
+                    android:layout_width="397dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="8dp"
+                    android:autofillHints="hint"
+                    android:hint="@string/artistname"
+                    android:inputType="text"
+                    android:maxLength="25"
+                    android:maxLines="1"
+                    android:padding="8dp" />
+
+                <EditText
+                    android:id="@+id/aboutartist"
+                    android:layout_width="397dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="8dp"
+                    android:autofillHints="hint"
+                    android:hint="@string/aboutartist"
+                    android:inputType="text"
+                    android:maxLength="25"
+                    android:maxLines="1"
+                    android:padding="8dp" />
+
+                <EditText
+                    android:id="@+id/dateofbirth"
+                    android:layout_width="397dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="8dp"
+                    android:autofillHints="hint"
+                    android:hint="@integer/dateofbirth"
+                    android:inputType="date"
+                    android:maxLength="25"
+                    android:maxLines="1"
+                    android:padding="8dp" />
+
+                <EditText
+                    android:id="@+id/age"
+                    android:layout_width="397dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="8dp"
+                    android:autofillHints="hint"
+                    android:hint="@integer/age"
+                    android:inputType="number"
+                    android:maxLength="25"
+                    android:maxLines="1"
+                    android:padding="8dp" />
+
+
                 <Button
                     android:id="@+id/btnAdd"
                     android:layout_width="match_parent"

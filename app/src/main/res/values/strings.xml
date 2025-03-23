@@ -1,18 +1,18 @@
 <resources>
-    <string name="app_title">MusicPlayer</string>
-
+    <string name="app_title">MP3</string>
     <string name="artist_title">Artist</string>
 
     //Song Model
     <string name="songname">SongName</string>
     <string name="genre">MusicGenre</string>
     <string name="releasedate">ReleaseDate</string>
+    <string name ="mp3_booting">Mp3Booting</string>
     <string name="button_addMusic">Add Music</string>
 
 
     //Artist Model
     <string name="artistname">ArtistName</string>
-    <string name="socialmedia">Social Media</string>
+    <string name="socialmedia">SocialMedia</string>
     <string name="aboutartist">AboutArtist</string>
     <string name="button_addArtist">Add Artist</string>
 
