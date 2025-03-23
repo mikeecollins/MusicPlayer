@@ -3,4 +3,6 @@
     <integer name="duration">800</integer>
     <integer name="max_rating">10</integer>
     <integer name="songid">0</integer>
+    <integer name="age">100</integer>
+    <integer name="dateofbirth">0</integer>
 </resources>
