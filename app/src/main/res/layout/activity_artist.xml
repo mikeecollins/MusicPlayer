@@ -79,8 +79,8 @@
                     android:layout_height="48dp"
                     android:layout_margin="8dp"
                     android:autofillHints="hint"
-                    android:hint="@integer/dateofbirth"
-                    android:inputType="date"
+                    android:hint="@string/dateofbirth"
+                    android:inputType="text"
                     android:maxLength="25"
                     android:maxLines="1"
                     android:padding="8dp" />
