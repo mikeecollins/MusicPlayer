@@ -22,6 +22,7 @@ class ArtistActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_artist)
 
+
         Timber.plant(Timber.DebugTree())
         i(getString(R.string.mp3_booting))
 
@@ -41,7 +42,7 @@ class ArtistActivity : AppCompatActivity() {
             artist.artistname = binding.artistname.text.toString()
             artist.aboutartist = binding.aboutartist.text.toString()
             artist.age = binding.age.text.toString().toIntOrNull() ?: 0
-            artist.dateofbirth = binding.dateofbirth.toString().toIntOrNull() ?: 0
+            artist.dateofbirth = binding.dateofbirth.text.toString()
 
             if (artist.artistTitle.isNotEmpty()) {
                 app.artists.add(artist.copy())
@@ -50,9 +51,10 @@ class ArtistActivity : AppCompatActivity() {
                     i("Artist[$i]:${this.app.artists[i]}")
 
                 }
+                setResult(RESULT_OK)
+                finish()
             } else {
-                Snackbar
-                    .make(it, "add an artist", Snackbar.LENGTH_LONG)
+                Snackbar.make(it, "add an artist", Snackbar.LENGTH_LONG)
                     .show()
             }
         }

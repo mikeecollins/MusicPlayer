@@ -55,7 +55,7 @@
                     android:layout_height="48dp"
                     android:layout_margin="8dp"
                     android:autofillHints="hint"
-                    android:hint="@integer/duration"
+                    android:hint="@string/duration"
                     android:inputType="numberDecimal"
                     android:maxLength="25"
                     android:maxLines="1"

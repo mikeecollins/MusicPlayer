@@ -6,4 +6,4 @@ data class SongModel(var maxrating: Int = 10,
                      var genre: String = "",
                      var releasedate: String = "",
                      var songid: Int = 0,
-                     var duration: Int = 800)
+                     var duration: Double = 800.0)

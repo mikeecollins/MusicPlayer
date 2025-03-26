@@ -8,6 +8,9 @@
     <string name="releasedate">ReleaseDate</string>
     <string name ="mp3_booting">Mp3Booting</string>
     <string name="button_addMusic">Add Music</string>
+    <string name="duration">800.0</string>
+    <string name="menu_addSong">AddSong</string>
+
 
 
     //Artist Model
@@ -15,5 +18,8 @@
     <string name="socialmedia">SocialMedia</string>
     <string name="aboutartist">AboutArtist</string>
     <string name="button_addArtist">Add Artist</string>
+    <string name="dateofbirth">DateOfBirth</string>
+    <string name="menu_addArtist">AddArtist</string>
+
 
 </resources>

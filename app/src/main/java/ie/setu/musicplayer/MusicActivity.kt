@@ -38,7 +38,7 @@ class MusicActivity : AppCompatActivity() {
         app = application as MainApp
         binding.btnAdd.setOnClickListener() {
             song.songname = binding.songname.text.toString()
-            song.duration = binding.duration.text.toString().toIntOrNull() ?: 800
+            song.duration = binding.duration.text.toString().toDoubleOrNull() ?: 800.0
             song.genre = binding.genre.text.toString()
             song.isFavourite = binding.isFavourite.text.toString() == "false" //I used chatgtp to convert this into boolean
             song.releasedate = binding.releasedate.text.toString()
@@ -51,10 +51,11 @@ class MusicActivity : AppCompatActivity() {
                 i("Song[$i]:${this.app.songs[i]}")
 
             }
+                setResult(RESULT_OK)
+                finish()
         }
         else{
-            Snackbar
-                .make(it, "Enter a song name", Snackbar.LENGTH_LONG)
+            Snackbar.make(it, "Enter a song name", Snackbar.LENGTH_LONG)
                 .show()
         }
     }
