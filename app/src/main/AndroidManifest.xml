@@ -13,18 +13,30 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MusicPlayer"
         tools:targetApi="31">
+
+        <!-- Music Activity (Main Launch Activity) -->
         <activity
-            android:name=".MusicListActivity"
+            android:name=".AppListActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Music List Activity -->
         <activity
             android:name=".MusicActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true" />
+
+
+        <!-- Artist Activity -->
+        <activity
+            android:name=".ArtistActivity"
+            android:exported="true" />
+
+
+
     </application>
 
 </manifest>

@@ -61,17 +61,14 @@
                     android:maxLines="1"
                     android:padding="8dp" />
 
-                <EditText
+                <CheckBox
                     android:id="@+id/isFavourite"
-                    android:layout_width="397dp"
-                    android:layout_height="48dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:autofillHints="hint"
-                    android:hint="Do you like this song"
-                    android:inputType="text"
-                    android:maxLength="25"
-                    android:maxLines="1"
-                    android:padding="8dp" />
+                    android:text="Do you like this song?"
+                    android:padding="8dp"
+                    android:layout_gravity="start"/>
 
                 <EditText
                     android:id="@+id/genre"
@@ -123,9 +120,8 @@
 
 
 
-
                 <Button
-                    android:id="@+id/btnAdd"
+                    android:id="@+id/btnAddMusic"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"

@@ -21,7 +21,6 @@ class MusicActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_music)
-
         Timber.plant(Timber.DebugTree())
         i(getString(R.string.mp3_booting))
 
@@ -36,33 +35,29 @@ class MusicActivity : AppCompatActivity() {
 
 
         app = application as MainApp
-        binding.btnAdd.setOnClickListener() {
+        binding.btnAddMusic.setOnClickListener() {
             song.songname = binding.songname.text.toString()
             song.duration = binding.duration.text.toString().toDoubleOrNull() ?: 800.0
             song.genre = binding.genre.text.toString()
-            song.isFavourite = binding.isFavourite.text.toString() == "false" //I used chatgtp to convert this into boolean
+            song.isFavourite = binding.isFavourite.isChecked
             song.releasedate = binding.releasedate.text.toString()
             song.songid = binding.songid.text.toString().toIntOrNull() ?: 0
             song.maxrating = binding.maxRating.text.toString().toIntOrNull() ?: 10
             if (song.songname.isNotEmpty()) {
                 app.songs.add(song.copy())
                 i("add Button Pressed: ${song}")
-                for (i in app.songs.indices ) {
-                i("Song[$i]:${this.app.songs[i]}")
-
-            }
+                for (i in app.songs.indices) {
+                    i("Song[$i]:${this.app.songs[i]}")
+                }
                 setResult(RESULT_OK)
                 finish()
+            } else {
+                Snackbar.make(it, "Please enter all values for the song", Snackbar.LENGTH_LONG)
+                    .show()
+            }
         }
-        else{
-            Snackbar.make(it, "Enter a song name", Snackbar.LENGTH_LONG)
-                .show()
-        }
+
+
     }
-}
-
-
-
-
         }
 
