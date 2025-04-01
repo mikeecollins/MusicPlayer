@@ -37,7 +37,7 @@ class ArtistActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         app = application as MainApp
-        binding.btnAdd.setOnClickListener() {
+        binding.btnAddArtist.setOnClickListener() {
             artist.artistTitle = binding.artistTitle.text.toString()
             artist.artistname = binding.artistname.text.toString()
             artist.aboutartist = binding.aboutartist.text.toString()

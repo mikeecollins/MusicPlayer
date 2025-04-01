@@ -1,16 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/item_addArtist"
+        android:title="Add Artist"
+        android:icon="@android:drawable/ic_menu_add"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/item_addSong"
+        android:title="Add Song"
         android:icon="@android:drawable/ic_menu_add"
-        android:title="@string/menu_addSong"
-        app:showAsAction="ifRoom" />
-
-    <item
-        android:id="@+id/item_addArtist"
-        android:icon="@android:drawable/ic_menu_add"
-        android:title="@string/menu_addArtist"
         app:showAsAction="always" />
 </menu>
