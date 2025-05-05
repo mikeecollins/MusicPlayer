@@ -11,4 +11,13 @@
         android:title="Add Song"
         android:icon="@android:drawable/ic_menu_add"
         app:showAsAction="always" />
+    i
+    <item
+        android:id="@+id/item_cancel"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:title="@string/menu_cancel"
+        app:showAsAction="always" />
+
+
+
 </menu>

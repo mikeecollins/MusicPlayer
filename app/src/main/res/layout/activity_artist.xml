@@ -10,20 +10,21 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="?attr/colorPrimary"
-            app:elevation="0dip">
+            android:backgroundTint="?attr/colorPrimary">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbarAdd"
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/topAppBar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:minHeight="?attr/actionBarSize"
+                app:titleTextColor="?attr/colorOnPrimary" />
         </com.google.android.material.appbar.AppBarLayout>
 
         <ScrollView
@@ -35,14 +36,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="8dp">
 
                 <EditText
                     android:id="@+id/artist_title"
-                    android:layout_width="397dp"
+                    android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:layout_margin="8dp"
-                    android:autofillHints="hint"
                     android:hint="@string/artist_title"
                     android:inputType="text"
                     android:maxLength="25"
@@ -51,10 +51,8 @@
 
                 <EditText
                     android:id="@+id/artistname"
-                    android:layout_width="397dp"
+                    android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:layout_margin="8dp"
-                    android:autofillHints="hint"
                     android:hint="@string/artistname"
                     android:inputType="text"
                     android:maxLength="25"
@@ -63,10 +61,8 @@
 
                 <EditText
                     android:id="@+id/aboutartist"
-                    android:layout_width="397dp"
+                    android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:layout_margin="8dp"
-                    android:autofillHints="hint"
                     android:hint="@string/aboutartist"
                     android:inputType="text"
                     android:maxLength="25"
@@ -75,36 +71,32 @@
 
                 <EditText
                     android:id="@+id/dateofbirth"
-                    android:layout_width="397dp"
+                    android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:layout_margin="8dp"
-                    android:autofillHints="hint"
                     android:hint="@string/dateofbirth"
                     android:inputType="text"
                     android:maxLength="25"
                     android:maxLines="1"
                     android:padding="8dp" />
 
-                <EditText
-                    android:id="@+id/age"
-                    android:layout_width="397dp"
-                    android:layout_height="48dp"
-                    android:layout_margin="8dp"
-                    android:autofillHints="hint"
-                    android:hint="@integer/age"
-                    android:inputType="number"
-                    android:maxLength="25"
-                    android:maxLines="1"
-                    android:padding="8dp" />
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="Select Age">
+
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                        android:id="@+id/age"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
                     android:id="@+id/btnAddArtist"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
+                    android:layout_marginTop="16dp"
                     android:backgroundTint="?attr/colorSecondary"
                     android:text="@string/button_addArtist" />
 

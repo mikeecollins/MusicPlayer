@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="max_rating">10</integer>
+    <integer name="maxRating">10</integer>
     <integer name="songid">0</integer>
     <integer name="age">100</integer>
 </resources>

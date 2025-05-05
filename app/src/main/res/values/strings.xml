@@ -1,6 +1,7 @@
 <resources>
     <string name="app_title">MP3</string>
     <string name="artist_title">Artist</string>
+    <string name="menu_cancel">Cancel</string>
 
     //Song Model
     <string name="songname">SongName</string>
@@ -10,6 +11,11 @@
     <string name="button_addMusic">Add Music</string>
     <string name="duration">800.0</string>
     <string name="menu_addSong">AddSong</string>
+    <string name="saveSong">saveSong</string>
+
+
+
+
 
 
 
@@ -19,7 +25,8 @@
     <string name="aboutartist">AboutArtist</string>
     <string name="button_addArtist">Add Artist</string>
     <string name="dateofbirth">DateOfBirth</string>
-    <string name="menu_addArtist">AddArtist</string>
+    <string name="saveArtist">saveArtist</string>
+
 
 
 </resources>
