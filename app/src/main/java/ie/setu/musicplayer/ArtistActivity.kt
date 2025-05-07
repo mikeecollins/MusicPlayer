@@ -1,14 +1,19 @@
 package ie.setu.musicplayer
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.snackbar.Snackbar
+import com.squareup.picasso.Picasso
+import ie.setu.app.helpers.showImagePicker
 import ie.setu.musicplayer.databinding.ActivityArtistBinding
 import main.MainApp
 import models.ArtistModel
@@ -18,6 +23,8 @@ import timber.log.Timber.i
 class ArtistActivity : AppCompatActivity() {
     private lateinit var binding: ActivityArtistBinding
     var artist = ArtistModel()
+    private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
+
     lateinit var app: MainApp//Allows users to avoid using nullable types
     //Lateinit meaning the property will not be initialized at the time of object creation but it will later on
 
@@ -26,6 +33,7 @@ class ArtistActivity : AppCompatActivity() {
         // enableEdgeToEdge()
         binding = ActivityArtistBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
 
         Timber.plant(Timber.DebugTree())
         i(getString(R.string.mp3_booting))
@@ -59,6 +67,10 @@ class ArtistActivity : AppCompatActivity() {
             binding.aboutartist.setText(artist.aboutartist)
             binding.dateofbirth.setText(artist.dateofbirth)
             binding.btnAddArtist.setText(R.string.saveArtist)
+            Picasso.get()
+                .load(artist.image)
+                .resize(800, 600)
+                .into(binding.artistImage)
 
         }
         binding.btnAddArtist.setOnClickListener() {
@@ -83,7 +95,17 @@ class ArtistActivity : AppCompatActivity() {
                     Snackbar.LENGTH_LONG
                 ).show()
             }
+
+
         }
+        binding.chooseImageArtist.setOnClickListener {
+            showImagePicker(this, imageIntentLauncher, R.string.select_artist_image)
+        }
+
+        registerImagePickerCallback()
+
+
+
     }
 
             override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -101,4 +123,27 @@ class ArtistActivity : AppCompatActivity() {
                 return super.onOptionsItemSelected(item)
             }
 
+    private fun registerImagePickerCallback() {
+        imageIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { result ->
+                when(result.resultCode){
+                    RESULT_OK -> {
+                        if (result.data != null) {
+                            i("Got Result ${result.data!!.data}")
+                            artist.image = result.data!!.data!!
+                            Picasso.get()
+                                .load(artist.image)
+                                .resize(800, 600)
+                                .into(binding.artistImage)
+                            val imageUri = result.data!!.data!!
+                            binding.chooseImageArtist.setText(R.string.change_artist_image)
+                            contentResolver.takePersistableUriPermission(imageUri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                            artist.image = imageUri
+                        } // end of if
+                    }
+                    RESULT_CANCELED -> { } else -> { }
+                }
+            }
+    }
         }

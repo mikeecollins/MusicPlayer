@@ -119,6 +119,25 @@
                     android:backgroundTint="?attr/colorSecondary"
                     android:text="@string/button_addMusic" />
 
+
+
+                <Button
+                    android:id="@+id/chooseImageSong"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"
+                    android:backgroundTint="?attr/colorSecondary"
+                    android:text="@string/button_addImageSong"/>
+
+                <ImageView
+                    android:id="@+id/songImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@mipmap/ic_launcher"/>
+
+
             </LinearLayout>
         </ScrollView>
     </RelativeLayout>

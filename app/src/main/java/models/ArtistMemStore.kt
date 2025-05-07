@@ -22,6 +22,7 @@ class ArtistMemStore : ArtistStore{
             foundArtist.artistname = artist.artistname
             foundArtist.age = artist.age
             foundArtist.dateofbirth = artist.dateofbirth
+            foundArtist.image = artist.image
 
         }
     }

@@ -3,6 +3,7 @@
     <string name="artist_title">Artist</string>
     <string name="menu_cancel">Cancel</string>
 
+
     //Song Model
     <string name="songname">SongName</string>
     <string name="genre">MusicGenre</string>
@@ -12,6 +13,13 @@
     <string name="duration">800.0</string>
     <string name="menu_addSong">AddSong</string>
     <string name="saveSong">saveSong</string>
+    <string name="playButton">playButton</string>
+    <string name="button_addImageSong">Add Image for Song</string>
+    <string name="select_song_image">Select song image</string>
+    <string name="change_song_image">Change song image</string>
+
+
+
 
 
 
@@ -26,6 +34,12 @@
     <string name="button_addArtist">Add Artist</string>
     <string name="dateofbirth">DateOfBirth</string>
     <string name="saveArtist">saveArtist</string>
+    <string name="button_addImageArtist">Add Image for artist</string>
+    <string name="select_artist_image">Select artist image</string>
+    <string name="change_artist_image">Change artist image</string>
+
+
+
 
 
 

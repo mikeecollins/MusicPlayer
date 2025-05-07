@@ -49,9 +49,9 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
+    implementation(libs.picasso)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation("com.jakewharton.timber:timber:4.7.1")
     implementation("com.github.ajalt:timberkt:1.5.1")
     implementation ("com.google.android.material:material:1.10.0")
-
 }
