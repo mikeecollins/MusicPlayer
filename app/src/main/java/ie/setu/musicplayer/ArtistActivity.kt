@@ -24,6 +24,7 @@ class ArtistActivity : AppCompatActivity() {
     private lateinit var binding: ActivityArtistBinding
     var artist = ArtistModel()
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
+    var edit = false
 
     lateinit var app: MainApp//Allows users to avoid using nullable types
     //Lateinit meaning the property will not be initialized at the time of object creation but it will later on
@@ -57,7 +58,8 @@ class ArtistActivity : AppCompatActivity() {
 
         app = application as MainApp
 
-        var edit = false
+
+
         if (intent.hasExtra("update_artist")) {
             edit = true
             artist = intent.extras?.getParcelable("update_artist")!!
@@ -110,6 +112,7 @@ class ArtistActivity : AppCompatActivity() {
 
             override fun onCreateOptionsMenu(menu: Menu): Boolean {
                 menuInflater.inflate(R.menu.menu_main, menu)
+                if (edit) menu.getItem(0).isVisible = true
                 return super.onCreateOptionsMenu(menu)
             }
 
@@ -117,6 +120,11 @@ class ArtistActivity : AppCompatActivity() {
                 when (item.itemId) {
                     R.id.item_cancel -> {
                         setResult(RESULT_CANCELED)
+                        finish()
+                    }
+                    R.id.item_delete -> {
+                        app.artists.delete(artist)
+                        setResult(99)
                         finish()
                     }
                 }
@@ -131,19 +139,24 @@ class ArtistActivity : AppCompatActivity() {
                     RESULT_OK -> {
                         if (result.data != null) {
                             i("Got Result ${result.data!!.data}")
-                            artist.image = result.data!!.data!!
+
+                            //placemark.image = result.data!!.data!!
+                            //Grant read permissions to selected image
+                            val image = result.data!!.data!!
+                            contentResolver.takePersistableUriPermission(image,
+                                Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                            artist.image = image
+
                             Picasso.get()
                                 .load(artist.image)
                                 .resize(800, 600)
                                 .into(binding.artistImage)
-                            val imageUri = result.data!!.data!!
+
                             binding.chooseImageArtist.setText(R.string.change_artist_image)
-                            contentResolver.takePersistableUriPermission(imageUri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                            artist.image = imageUri
                         } // end of if
                     }
                     RESULT_CANCELED -> { } else -> { }
                 }
             }
     }
-        }
+}

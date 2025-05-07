@@ -16,8 +16,8 @@ import java.text.NumberFormat
 import java.util.Locale
 
 interface AppListener {
-    fun onSongClick(song: SongModel)
-    fun onArtistClick(artist: ArtistModel)
+    fun onSongClick(song: SongModel,position : Int)
+    fun onArtistClick(artist: ArtistModel, position : Int)
 }
 
 
@@ -81,7 +81,7 @@ class AppAdapter constructor(private var items: List<AppListActivity.AppItem>,
             binding.age.text = NumberFormat.getInstance(Locale.getDefault()).format(artist.age)
             binding.dateofbirth.text = artist.dateofbirth
             Picasso.get().load(artist.image).resize(200,200).into(binding.imageIcon)
-            binding.root.setOnClickListener { listener.onArtistClick(artist) }
+            binding.root.setOnClickListener { listener.onArtistClick(artist, adapterPosition) }
 
         }
     }
@@ -101,7 +101,7 @@ class AppAdapter constructor(private var items: List<AppListActivity.AppItem>,
             binding.maxRating.text =
                 NumberFormat.getInstance(Locale.getDefault()).format(song.maxrating)
             Picasso.get().load(song.image).resize(200,200).into(binding.imageIcon)
-            binding.root.setOnClickListener { listener.onSongClick(song) }
+            binding.root.setOnClickListener { listener.onSongClick(song, adapterPosition) }
 
 
             //val uri = Uri.parse(song.audioUri)
@@ -119,4 +119,6 @@ class AppAdapter constructor(private var items: List<AppListActivity.AppItem>,
 
         }
     }
+
+
 }

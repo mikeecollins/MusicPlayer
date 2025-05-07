@@ -29,4 +29,9 @@ class ArtistMemStore : ArtistStore{
     fun logAll(){
         artists.forEach{ i("${it}")}
     }
+
+    override fun delete(artist: ArtistModel) {
+        artists.remove(artist)
+    }
+
 }
