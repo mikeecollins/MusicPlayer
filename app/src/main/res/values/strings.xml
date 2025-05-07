@@ -2,6 +2,8 @@
     <string name="app_title">MP3</string>
     <string name="artist_title">Artist</string>
     <string name="menu_cancel">Cancel</string>
+    <string name="add_cancelled">Add Cancelled</string>
+    <string name="menu_delete">Delete</string>
 
 
     //Song Model
@@ -27,6 +29,8 @@
 
 
 
+
+
     //Artist Model
     <string name="artistname">ArtistName</string>
     <string name="socialmedia">SocialMedia</string>
@@ -37,6 +41,7 @@
     <string name="button_addImageArtist">Add Image for artist</string>
     <string name="select_artist_image">Select artist image</string>
     <string name="change_artist_image">Change artist image</string>
+
 
 
 

@@ -27,6 +27,7 @@ class MusicActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMusicBinding
     var song = SongModel()
     private lateinit var imageIntentLauncher: ActivityResultLauncher<Intent>
+    var edit = false
 
     lateinit var app: MainApp
     // private lateinit var mediaPlayer: MediaPlayer
@@ -74,7 +75,7 @@ class MusicActivity : AppCompatActivity() {
 
         app = application as MainApp
 
-        var edit = false
+
 
         if (intent.hasExtra("update_song")) {
             edit = true
@@ -131,6 +132,7 @@ class MusicActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
+        if (edit) menu.getItem(0).isVisible = true
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -138,6 +140,11 @@ class MusicActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.item_cancel -> {
                 setResult(RESULT_CANCELED)
+                finish()
+            }
+            R.id.item_delete -> {
+                app.songs.delete(song)
+                setResult(99)
                 finish()
             }
         }
@@ -148,24 +155,25 @@ class MusicActivity : AppCompatActivity() {
         imageIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
             { result ->
-                when (result.resultCode) {
+                when(result.resultCode){
                     RESULT_OK -> {
                         if (result.data != null) {
                             i("Got Result ${result.data!!.data}")
-                            song.image = result.data!!.data!!
+
+                            val image = result.data!!.data!!
+                            contentResolver.takePersistableUriPermission(image,
+                                Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                            song.image = image
+
                             Picasso.get()
                                 .load(song.image)
                                 .resize(800, 600)
                                 .into(binding.songImage)
-                            val imageUri = result.data!!.data!!
+
                             binding.chooseImageSong.setText(R.string.change_song_image)
-                            contentResolver.takePersistableUriPermission(imageUri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                            song.image = imageUri
                         } // end of if
                     }
-
-                    RESULT_CANCELED -> {}
-                    else -> {}
+                    RESULT_CANCELED -> { } else -> { }
                 }
             }
     }

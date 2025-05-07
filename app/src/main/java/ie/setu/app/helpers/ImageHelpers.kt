@@ -8,6 +8,8 @@ import ie.setu.musicplayer.R
 
 fun showImagePicker(context: Context, intentLauncher: ActivityResultLauncher<Intent>, titleResId: Int) {
     val chooseFile = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+        addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
+        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         type = "image/*"
         addCategory(Intent.CATEGORY_OPENABLE)
     }
