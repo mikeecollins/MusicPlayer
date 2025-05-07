@@ -30,6 +30,7 @@ class SongMemStore : SongStore {
             foundSong.maxrating = song.maxrating
             foundSong.releasedate = song.releasedate
             foundSong.isFavourite = song.isFavourite
+            foundSong.image = song.image
             logAll()
         }
     }

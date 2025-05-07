@@ -12,6 +12,14 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <ImageView
+            android:id="@+id/imageIcon"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/change_artist_image" />
+
         <TextView
             android:id="@+id/artistTitle"
             android:layout_width="wrap_content"

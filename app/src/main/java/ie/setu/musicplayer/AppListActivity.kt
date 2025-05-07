@@ -2,6 +2,7 @@ package ie.setu.musicplayer
 
 import android.app.Activity
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -59,11 +60,17 @@ class AppListActivity: AppCompatActivity(), AppListener {
 
 
 
+
+
+
+
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         appAdapter = AppAdapter(items, this)
         binding.recyclerView.adapter = appAdapter
 
     }
+
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
@@ -108,6 +115,8 @@ class AppListActivity: AppCompatActivity(), AppListener {
         launcherIntent.putExtra("update_song", song)
         getResult.launch(launcherIntent)
 
+
+
     }
 
     override fun onArtistClick(artist: ArtistModel) {
@@ -116,6 +125,7 @@ class AppListActivity: AppCompatActivity(), AppListener {
         getResult.launch(launcherIntent)
 
         }
+
 
     }
 
