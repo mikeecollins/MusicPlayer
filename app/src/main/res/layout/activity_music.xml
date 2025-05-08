@@ -131,6 +131,16 @@
                     android:backgroundTint="?attr/colorSecondary"
                     android:text="@string/button_addImageSong"/>
 
+                <Button
+                    android:id="@+id/chooseAudioFile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"
+                    android:backgroundTint="?attr/colorSecondary"
+                    android:text="Pick Audio File"/>
+
                 <ImageView
                     android:id="@+id/songImage"
                     android:layout_width="match_parent"

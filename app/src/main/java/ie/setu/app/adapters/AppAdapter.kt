@@ -2,8 +2,10 @@ package ie.setu.app.adapters
 
 import android.media.MediaPlayer
 import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import ie.setu.musicplayer.AppListActivity
@@ -12,6 +14,7 @@ import ie.setu.musicplayer.databinding.CardArtistBinding
 import ie.setu.musicplayer.databinding.CardMusicBinding
 import models.ArtistModel
 import models.SongModel
+import java.io.IOException
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -24,6 +27,7 @@ interface AppListener {
 class AppAdapter constructor(private var items: List<AppListActivity.AppItem>,
     private val listener: AppListener) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
 
     companion object { // Defines static like variables and methods
         private const val VIEW_TYPE_ARTIST = 1
@@ -80,7 +84,7 @@ class AppAdapter constructor(private var items: List<AppListActivity.AppItem>,
             binding.artistname.text = artist.artistname
             binding.age.text = NumberFormat.getInstance(Locale.getDefault()).format(artist.age)
             binding.dateofbirth.text = artist.dateofbirth
-            Picasso.get().load(artist.image).resize(200,200).into(binding.imageIcon)
+            Picasso.get().load(artist.image).resize(200, 200).into(binding.imageIcon)
             binding.root.setOnClickListener { listener.onArtistClick(artist, adapterPosition) }
 
         }
@@ -88,9 +92,9 @@ class AppAdapter constructor(private var items: List<AppListActivity.AppItem>,
 
     class MusicViewHolder(private val binding: CardMusicBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        private var mediaPlayer: MediaPlayer? = null
+        private var isPlaying = false
 
-
-       // private var mediaPlayer: MediaPlayer? = null
 
         fun bind(song: SongModel, listener: AppListener) {
             binding.songname.text = song.songname
@@ -100,13 +104,60 @@ class AppAdapter constructor(private var items: List<AppListActivity.AppItem>,
             binding.isFavourite.text = if (song.isFavourite) "Favourite" else "Not Favourite"
             binding.maxRating.text =
                 NumberFormat.getInstance(Locale.getDefault()).format(song.maxrating)
-            Picasso.get().load(song.image).resize(200,200).into(binding.imageIcon)
+            Picasso.get().load(song.image).resize(200, 200).into(binding.imageIcon)
             binding.root.setOnClickListener { listener.onSongClick(song, adapterPosition) }
+
+            var isPlaying = false
+
+            binding.btnPlayAudio.setOnClickListener {// used this tutorial to help me with the audio code https://www.youtube.com/watch?v=nKdRdCjBKxM
+                val uri = song.audioUri
+                Log.d("AppAdapter", "Trying to play URI: $uri")
+
+
+                try {
+                    if (uri != Uri.EMPTY) {  //https://www.youtube.com/watch?v=s3XRXOQ2Amg used this video to help me play songs in my card
+                        val parcelFileDescriptor =
+                            binding.root.context.contentResolver.openFileDescriptor(uri, "r")
+                        val fileDescriptor = parcelFileDescriptor?.fileDescriptor
+
+                        mediaPlayer = MediaPlayer().apply {
+                            setDataSource(fileDescriptor!!)
+                            setOnPreparedListener {
+                                start()
+                                isPlaying = true
+                                binding.btnPlayAudio.setImageResource(android.R.drawable.ic_media_pause)
+                            }
+                            setOnCompletionListener {
+                                isPlaying = false
+                                binding.btnPlayAudio.setImageResource(android.R.drawable.ic_media_play)
+                            }
+                            prepareAsync()
+                        }
+                    } else {
+                        Toast.makeText(
+                            binding.root.context,
+                            "Audio file is missing",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                } catch (e: IOException) {
+                    Log.e("MusicActivity", "Error playing audio", e)
+                    Toast.makeText(
+                        binding.root.context,
+                        "Unable to play audio: ${e.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+    }
+}
 
 
             //val uri = Uri.parse(song.audioUri)
            // mediaPlayer = MediaPlayer.create(binding.root.context, uri)
           //  mediaPlayer?.start()
+//originally used this code for my audio but it did not work
 
             //binding.songFileUri.text = "File: ${Uri.parse(song.audioUri).lastPathSegment}"
 
@@ -115,10 +166,6 @@ class AppAdapter constructor(private var items: List<AppListActivity.AppItem>,
 
 
 
-                //binds the item to the data we are going to be prompt to enter
-
-        }
-    }
 
 
-}
+

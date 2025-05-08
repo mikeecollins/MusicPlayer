@@ -13,4 +13,5 @@ data class SongModel(var id: Long = 0,
                      var genre: String = "",
                      var releasedate: String = "",
                      var image: Uri = Uri.EMPTY,
+                     var audioUri: Uri = Uri.EMPTY,
                      var duration: Double = 800.0) : Parcelable

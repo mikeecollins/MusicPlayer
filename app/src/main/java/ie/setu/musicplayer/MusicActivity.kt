@@ -25,32 +25,23 @@ import timber.log.Timber.i
 
 class MusicActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMusicBinding
+    private lateinit var app: MainApp
     var song = SongModel()
-    private lateinit var imageIntentLauncher: ActivityResultLauncher<Intent>
-    var edit = false
+    private var edit = false
 
-    lateinit var app: MainApp
-    // private lateinit var mediaPlayer: MediaPlayer
-    //  private val PICK_AUDIO_REQUEST_CODE = 1001
+    private lateinit var imageIntentLauncher: ActivityResultLauncher<Intent>
+    private lateinit var audioIntentLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_music)
-
-
-        //  val pickAudioIntent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-        //     type = "audio/*"
-        //       addCategory(Intent.CATEGORY_OPENABLE)
-        //   }
-        //   startActivityForResult(pickAudioIntent, PICK_AUDIO_REQUEST_CODE)
-
-
         binding = ActivityMusicBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        // enableEdgeToEdge()
-        // setContentView(R.layout.activity_music)
+
+        app = application as MainApp
         Timber.plant(Timber.DebugTree())
-        i(getString(R.string.mp3_booting))
+
+        binding.topAppBar.title = title
+        setSupportActionBar(binding.topAppBar)
 
         val ratingOptions = (1..10).map { it.toString() }
         val ratingAdapter =
@@ -61,22 +52,8 @@ class MusicActivity : AppCompatActivity() {
             binding.maxRating.showDropDown()
         }
 
-        /* ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }*/
 
-
-        binding.topAppBar.title = title
-        setSupportActionBar(binding.topAppBar)
-
-
-
-        app = application as MainApp
-
-
-
+        // Edit mode
         if (intent.hasExtra("update_song")) {
             edit = true
             song = intent.extras?.getParcelable("update_song")!!
@@ -87,47 +64,99 @@ class MusicActivity : AppCompatActivity() {
             binding.releasedate.setText(song.releasedate)
             binding.isFavourite.isChecked = song.isFavourite
             binding.btnAddMusic.setText(R.string.saveSong)
-            Picasso.get()
-                .load(song.image)
-                .resize(800, 600)
-                .into(binding.songImage)
-
+            Picasso.get().load(song.image).resize(800, 600).into(binding.songImage)
         }
-
-        binding.btnAddMusic.setOnClickListener() {
-            song.songname = binding.songname.text.toString()
-            song.duration = binding.duration.text.toString().toDoubleOrNull() ?: 800.0
-            song.genre = binding.genre.text.toString()
-            song.isFavourite = binding.isFavourite.isChecked
-            song.releasedate = binding.releasedate.text.toString()
-            song.maxrating = binding.maxRating.text.toString().toIntOrNull() ?: 10
-            if (song.songname.isNotEmpty()) {
-                if (edit) {
-                    app.songs.update(song.copy())
-                } else {
-
-
-                    app.songs.create(song.copy())
-                }
-                setResult(RESULT_OK)
-                finish()
-            } else {
-                Snackbar.make(
-                    it, getString(R.string.artist_title),
-                    Snackbar.LENGTH_LONG
-                ).show()
-            }
-        }
-
-
-
-
-
-
         binding.chooseImageSong.setOnClickListener {
-            showImagePicker(this, imageIntentLauncher, R.string.select_song_image)
+            showImagePicker()
+        }
+
+
+        binding.chooseAudioFile.setOnClickListener {
+            showAudioPicker()
+        }
+
+
+        binding.btnAddMusic.setOnClickListener {
+            saveSong()
         }
         registerImagePickerCallback()
+        registerAudioPickerCallback()
+    }
+
+    private fun showImagePicker() {
+        val pickImageIntent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            type = "image/*"
+            addCategory(Intent.CATEGORY_OPENABLE)
+        }
+        imageIntentLauncher.launch(pickImageIntent)
+    }
+
+    private fun showAudioPicker() {
+        val pickAudioIntent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            type = "audio/*"
+            addCategory(Intent.CATEGORY_OPENABLE)
+        }
+        audioIntentLauncher.launch(pickAudioIntent)
+    }
+
+    private fun registerImagePickerCallback() {
+        imageIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                when (result.resultCode) {
+                    RESULT_OK -> {
+                        val imageUri = result.data?.data
+                        imageUri?.let {
+                            contentResolver.takePersistableUriPermission(it, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                            song.image = it
+                            Picasso.get().load(song.image).resize(800, 600).into(binding.songImage)
+                        }
+                    }
+                    RESULT_CANCELED -> { }
+                    else -> { }
+                }
+            }
+    }
+
+    private fun registerAudioPickerCallback() {
+        audioIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                when (result.resultCode) {
+                    RESULT_OK -> {
+                        val audioUri = result.data?.data
+                        audioUri?.let {
+                            song.audioUri = it
+
+                            contentResolver.takePersistableUriPermission(
+                                audioUri,
+                                Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
+                        }
+                    }
+                    RESULT_CANCELED -> { }
+                    else -> { }
+                }
+            }
+    }
+
+    private fun saveSong() {
+        song.songname = binding.songname.text.toString()
+        song.duration = binding.duration.text.toString().toDoubleOrNull() ?: 800.0
+        song.genre = binding.genre.text.toString()
+        song.isFavourite = binding.isFavourite.isChecked
+        song.releasedate = binding.releasedate.text.toString()
+        song.maxrating = binding.maxRating.text.toString().toIntOrNull() ?: 10
+
+        if (song.songname.isNotEmpty()) {
+            if (edit) {
+                app.songs.update(song)
+            } else {
+                app.songs.create(song)
+            }
+            setResult(RESULT_OK)
+            finish()
+        } else {
+            Snackbar.make(binding.root, getString(R.string.artist_title), Snackbar.LENGTH_LONG).show()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -150,62 +179,7 @@ class MusicActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-
-    private fun registerImagePickerCallback() {
-        imageIntentLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-            { result ->
-                when(result.resultCode){
-                    RESULT_OK -> {
-                        if (result.data != null) {
-                            i("Got Result ${result.data!!.data}")
-
-                            val image = result.data!!.data!!
-                            contentResolver.takePersistableUriPermission(image,
-                                Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                            song.image = image
-
-                            Picasso.get()
-                                .load(song.image)
-                                .resize(800, 600)
-                                .into(binding.songImage)
-
-                            binding.chooseImageSong.setText(R.string.change_song_image)
-                        } // end of if
-                    }
-                    RESULT_CANCELED -> { } else -> { }
-                }
-            }
-    }
 }
-
-//@Deprecated("This method has been deprecated in favor of using the Activity Result API\n      which brings increased type safety via an {@link ActivityResultContract} and the prebuilt\n      contracts for common intents available in\n      {@link androidx.activity.result.contract.ActivityResultContracts}, provides hooks for\n      testing, and allow receiving results in separate, testable classes independent from your\n      activity. Use\n      {@link #registerForActivityResult(ActivityResultContract, ActivityResultCallback)}\n      with the appropriate {@link ActivityResultContract} and handling the result in the\n      {@link ActivityResultCallback#onActivityResult(Object) callback}.")
-  //  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-    //    super.onActivityResult(requestCode, resultCode, data)
-
-    /*    if (requestCode == PICK_AUDIO_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            data?.data?.let { uri ->
-                // ✅ Persist permission to access the file across restarts
-                contentResolver.takePersistableUriPermission(
-                    uri,
-                    Intent.FLAG_GRANT_READ_URI_PERMISSION
-                )
-
-                val newSong = SongModel(
-                    songname = "User Selected Song",
-                    audioUri = uri.toString(), // <-- Make sure you added this to SongModel
-                    duration = 800.0
-                )
-
-                (application as MainApp).songs.create(newSong)
-                setResult(Activity.RESULT_OK)
-                finish()
-            }
-        }
-   */
-
-
-
 
 
 

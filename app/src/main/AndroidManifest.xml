@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- had to allow permissions for my audio https://stackoverflow.com/questions/48762146/record-audio-permission-is-not-displayed-in-my-application-on-starting-the-appli/48762230 -->
+
     <application
         android:name="main.MainApp"
         android:allowBackup="true"
@@ -14,7 +18,7 @@
         android:theme="@style/Theme.MusicPlayer"
         tools:targetApi="31">
 
-        <!-- Music Activity (Main Launch Activity) -->
+
         <activity
             android:name=".AppListActivity"
             android:exported="true">
@@ -24,13 +28,13 @@
             </intent-filter>
         </activity>
 
-        <!-- Music List Activity -->
+
         <activity
             android:name=".MusicActivity"
             android:exported="true" />
 
 
-        <!-- Artist Activity -->
+
         <activity
             android:name=".ArtistActivity"
             android:exported="true" />
