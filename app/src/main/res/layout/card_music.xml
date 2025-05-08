@@ -64,12 +64,16 @@
             android:layout_height="wrap_content"
             android:text="releasedate?"/>
 
-        <ImageView
-            android:id="@+id/playButton"
+        <ImageButton
+            android:id="@+id/btnPlayAudio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_media_play"
-            android:layout_marginTop="8dp"/>
+            android:contentDescription="@string/play_audio"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="16dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            />
 
 
 

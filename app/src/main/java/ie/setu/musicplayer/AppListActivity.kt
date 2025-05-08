@@ -2,6 +2,8 @@ package ie.setu.musicplayer
 
 import android.app.Activity
 import android.content.Intent
+import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -22,7 +24,7 @@ class AppListActivity : AppCompatActivity(), AppListener {
     lateinit var app: MainApp
     private lateinit var binding: ActivityAppListBinding
     private lateinit var appAdapter: AppAdapter
-    private val items = mutableListOf<AppItem>()  // Central mutable list
+    private val items = mutableListOf<AppItem>()
 
     sealed class AppItem {
         data class ArtistItem(val artist: ArtistModel) : AppItem()
@@ -33,17 +35,15 @@ class AppListActivity : AppCompatActivity(), AppListener {
         super.onCreate(savedInstanceState)
         binding = ActivityAppListBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        app = application as MainApp
         binding.topAppBar.title = title
         setSupportActionBar(binding.topAppBar)
 
-        app = application as MainApp
-
-        // Populate the items list
         items.clear()
         items.addAll(app.artists.findAll().map { AppItem.ArtistItem(it) })
         items.addAll(app.songs.findAll().map { AppItem.SongItem(it) })
 
-        // Set up adapter and recycler view
         appAdapter = AppAdapter(items, this)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = appAdapter
@@ -60,7 +60,6 @@ class AppListActivity : AppCompatActivity(), AppListener {
                 val launcherIntent = Intent(this, ArtistActivity::class.java)
                 getResult.launch(launcherIntent)
             }
-
             R.id.item_addSong -> {
                 val launcherIntent = Intent(this, MusicActivity::class.java)
                 getResult.launch(launcherIntent)
@@ -73,19 +72,15 @@ class AppListActivity : AppCompatActivity(), AppListener {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             when (it.resultCode) {
                 Activity.RESULT_OK -> {
-                    // Refresh the entire list
                     items.clear()
                     items.addAll(app.artists.findAll().map { AppItem.ArtistItem(it) })
                     items.addAll(app.songs.findAll().map { AppItem.SongItem(it) })
                     appAdapter.notifyDataSetChanged()
                 }
-
                 Activity.RESULT_CANCELED -> {
                     Snackbar.make(binding.root, getString(R.string.add_cancelled), Snackbar.LENGTH_LONG).show()
                 }
-
                 99 -> {
-                    // Remove item at 'position'
                     if (position in items.indices) {
                         items.removeAt(position)
                         appAdapter.notifyItemRemoved(position)
