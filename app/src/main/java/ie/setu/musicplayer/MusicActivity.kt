@@ -53,7 +53,7 @@ class MusicActivity : AppCompatActivity() {
         }
 
 
-        // Edit mode
+
         if (intent.hasExtra("update_song")) {
             edit = true
             song = intent.extras?.getParcelable("update_song")!!
@@ -155,7 +155,7 @@ class MusicActivity : AppCompatActivity() {
             setResult(RESULT_OK)
             finish()
         } else {
-            Snackbar.make(binding.root, getString(R.string.artist_title), Snackbar.LENGTH_LONG).show()
+            Snackbar.make(binding.root, getString(R.string.songname), Snackbar.LENGTH_LONG).show()
         }
     }
 

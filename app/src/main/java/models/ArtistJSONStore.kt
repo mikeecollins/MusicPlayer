@@ -16,7 +16,6 @@ import ie.setu.app.helpers.read
 import ie.setu.app.helpers.write
 import timber.log.Timber
 import java.lang.reflect.Type
-import kotlin.random.Random
 
 
 const val JSON_FILE = "artists.json"
@@ -46,7 +45,16 @@ class ArtistJSONSore(private val context: Context) : ArtistStore {
     }
 
     override fun update(artist: ArtistModel) {
-        TODO("Not yet implemented")
+        val foundArtist = artists.find { it.artistname == artist.artistname }
+        if (foundArtist != null) {
+            foundArtist.socialmedia = artist.socialmedia
+            foundArtist.artistTitle = artist.artistTitle
+            foundArtist.age = artist.age
+            foundArtist.dateofbirth = artist.dateofbirth
+            foundArtist.image = artist.image
+            foundArtist.aboutartist = artist.aboutartist
+            serialize()
+        }
     }
 
     override fun delete(artist: ArtistModel) {

@@ -58,11 +58,6 @@
             android:layout_height="wrap_content"
             android:text="releasedate?"/>
 
-        <TextView
-            android:id="@+id/songid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="releasedate?"/>
 
         <ImageButton
             android:id="@+id/btnPlayAudio"
