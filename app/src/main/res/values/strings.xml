@@ -13,7 +13,7 @@
     <string name="releasedate">ReleaseDate</string>
     <string name ="mp3_booting">Mp3Booting</string>
     <string name="button_addMusic">Add Music</string>
-    <string name="duration">800.0</string>
+    <string name="duration">duration of the song</string>
     <string name="menu_addSong">AddSong</string>
     <string name="saveSong">saveSong</string>
     <string name="playButton">playButton</string>

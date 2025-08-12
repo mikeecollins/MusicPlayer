@@ -46,9 +46,19 @@ class SongJSONStore(private val context: Context) : SongStore {
     }
 
     override fun update(song: SongModel) {
-        TODO("Not yet implemented")
+        val foundSong = songs.find { it.id == song.id }
+        if (foundSong != null) {
+            foundSong.maxrating = song.maxrating
+            foundSong.isFavourite = song.isFavourite
+            foundSong.songname = song.songname
+            foundSong.genre = song.genre
+            foundSong.releasedate = song.releasedate
+            foundSong.image = song.image
+            foundSong.audioUri = song.audioUri
+            foundSong.duration = song.duration
+            serialize()
+        }
     }
-
     override fun delete(song: SongModel) {
         songs.remove(song)
         serialize()
