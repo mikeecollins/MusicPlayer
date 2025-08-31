@@ -111,33 +111,37 @@ class AppAdapter constructor(private var items: List<AppListActivity.AppItem>,
 
             binding.btnPlayAudio.setOnClickListener {
                 val uri = song.audioUri
-                if (uri != Uri.EMPTY) { //https://www.youtube.com/watch?v=s3XRXOQ2Amg used this video to help me play songs in my card
+                if (uri != Uri.EMPTY) {
                     try {
-                        if (mediaPlayer == null) {
-                            val parcelFileDescriptor =
-                                binding.root.context.contentResolver.openFileDescriptor(uri, "r")
-                            val fileDescriptor = parcelFileDescriptor?.fileDescriptor
+                        // Release existing MediaPlayer if it's playing another song
+                        if (mediaPlayer != null) {
+                            mediaPlayer?.reset()
+                            mediaPlayer?.release()
+                            mediaPlayer = null
+                            isPlaying = false
+                        }
 
-                            mediaPlayer = MediaPlayer().apply {
-                                setDataSource(fileDescriptor!!)
-                                setOnPreparedListener {
-                                    start()
-                                    this@MusicViewHolder.isPlaying = true
-                                }
-                                setOnCompletionListener {
-                                    this@MusicViewHolder.isPlaying = false
-                                }
-                                prepareAsync()
+                        // Initialize new MediaPlayer for the selected song
+                        val parcelFileDescriptor = binding.root.context.contentResolver.openFileDescriptor(uri, "r")
+                        val fileDescriptor = parcelFileDescriptor?.fileDescriptor
+
+                        mediaPlayer = MediaPlayer().apply {
+                            setDataSource(fileDescriptor!!)
+                            setOnPreparedListener {
+                                start()
+                                this@MusicViewHolder.isPlaying = true
                             }
-                        } else {
-                            mediaPlayer?.start()
-                            isPlaying = true
+                            setOnCompletionListener {
+                                this@MusicViewHolder.isPlaying = false
+                            }
+                            prepareAsync()
                         }
                     } catch (e: Exception) {
                         Log.e("AppAdapter", "Error playing audio", e)
                     }
                 }
             }
+
 
 
             binding.btnPauseAudio.setOnClickListener { //https://stackoverflow.com/questions/9461056/android-media-player-play-pause-button
