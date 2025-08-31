@@ -111,9 +111,9 @@ class AppAdapter constructor(private var items: List<AppListActivity.AppItem>,
 
             binding.btnPlayAudio.setOnClickListener {
                 val uri = song.audioUri
-                if (uri != Uri.EMPTY) {
+                if (uri != Uri.EMPTY) { //https://www.youtube.com/watch?v=s3XRXOQ2Amg used this video to help me play songs in my card
                     try {
-                        // Release existing MediaPlayer if it's playing another song
+
                         if (mediaPlayer != null) {
                             mediaPlayer?.reset()
                             mediaPlayer?.release()
@@ -121,7 +121,7 @@ class AppAdapter constructor(private var items: List<AppListActivity.AppItem>,
                             isPlaying = false
                         }
 
-                        // Initialize new MediaPlayer for the selected song
+
                         val parcelFileDescriptor = binding.root.context.contentResolver.openFileDescriptor(uri, "r")
                         val fileDescriptor = parcelFileDescriptor?.fileDescriptor
 
