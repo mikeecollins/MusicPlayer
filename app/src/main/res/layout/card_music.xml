@@ -71,6 +71,13 @@
             />
 
 
+        <ImageButton
+            android:id="@+id/btnPauseAudio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@android:drawable/ic_media_pause" />
 
 
     </LinearLayout>

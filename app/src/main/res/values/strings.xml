@@ -5,6 +5,7 @@
     <string name="add_cancelled">Add Cancelled</string>
     <string name="menu_delete">Delete</string>
     <string name="play_audio">Play Audio</string>
+    <string name="pause_audio"></string>
 
 
     //Song Model
