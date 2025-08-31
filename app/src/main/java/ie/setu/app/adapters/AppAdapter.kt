@@ -105,48 +105,45 @@ class AppAdapter constructor(private var items: List<AppListActivity.AppItem>,
             binding.maxRating.text =
                 NumberFormat.getInstance(Locale.getDefault()).format(song.maxrating)
             Picasso.get().load(song.image).resize(200, 200).into(binding.imageIcon)
+
             binding.root.setOnClickListener { listener.onSongClick(song, adapterPosition) }
 
-            var isPlaying = false
 
-            binding.btnPlayAudio.setOnClickListener {// used this tutorial to help me with the audio code https://www.youtube.com/watch?v=nKdRdCjBKxM
+            binding.btnPlayAudio.setOnClickListener {
                 val uri = song.audioUri
-                Log.d("AppAdapter", "Trying to play URI: $uri")
+                if (uri != Uri.EMPTY) { //https://www.youtube.com/watch?v=s3XRXOQ2Amg used this video to help me play songs in my card
+                    try {
+                        if (mediaPlayer == null) {
+                            val parcelFileDescriptor =
+                                binding.root.context.contentResolver.openFileDescriptor(uri, "r")
+                            val fileDescriptor = parcelFileDescriptor?.fileDescriptor
 
-
-                try {
-                    if (uri != Uri.EMPTY) {  //https://www.youtube.com/watch?v=s3XRXOQ2Amg used this video to help me play songs in my card
-                        val parcelFileDescriptor =
-                            binding.root.context.contentResolver.openFileDescriptor(uri, "r")
-                        val fileDescriptor = parcelFileDescriptor?.fileDescriptor
-
-                        mediaPlayer = MediaPlayer().apply {
-                            setDataSource(fileDescriptor!!)
-                            setOnPreparedListener {
-                                start()
-                                isPlaying = true
-                                binding.btnPlayAudio.setImageResource(android.R.drawable.ic_media_pause)
+                            mediaPlayer = MediaPlayer().apply {
+                                setDataSource(fileDescriptor!!)
+                                setOnPreparedListener {
+                                    start()
+                                    this@MusicViewHolder.isPlaying = true
+                                }
+                                setOnCompletionListener {
+                                    this@MusicViewHolder.isPlaying = false
+                                }
+                                prepareAsync()
                             }
-                            setOnCompletionListener {
-                                isPlaying = false
-                                binding.btnPlayAudio.setImageResource(android.R.drawable.ic_media_play)
-                            }
-                            prepareAsync()
+                        } else {
+                            mediaPlayer?.start()
+                            isPlaying = true
                         }
-                    } else {
-                        Toast.makeText(
-                            binding.root.context,
-                            "Audio file is missing",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                    } catch (e: Exception) {
+                        Log.e("AppAdapter", "Error playing audio", e)
                     }
-                } catch (e: IOException) {
-                    Log.e("MusicActivity", "Error playing audio", e)
-                    Toast.makeText(
-                        binding.root.context,
-                        "Unable to play audio: ${e.message}",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                }
+            }
+
+
+            binding.btnPauseAudio.setOnClickListener { //https://stackoverflow.com/questions/9461056/android-media-player-play-pause-button
+                if (mediaPlayer?.isPlaying == true) {
+                    mediaPlayer?.pause()
+                    isPlaying = false
                 }
             }
         }
